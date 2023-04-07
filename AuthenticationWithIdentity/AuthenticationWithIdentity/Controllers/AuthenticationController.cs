@@ -15,7 +15,7 @@ namespace AuthenticationWithIdentity.Controllers
             _authenticate = authenticate;
         }
 
-        [HttpPost]
+        [HttpPost("register")]
         public async Task<IActionResult> RegisterUser([FromBody] UserForRegistration userForRegistration)
         {
             if (userForRegistration == null)
@@ -32,6 +32,16 @@ namespace AuthenticationWithIdentity.Controllers
                 return BadRequest(ModelState);
             }
             return StatusCode(201);
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Authenticate(UserForAuthentication user)
+        {
+            if (!await _authenticate.ValidateUser(user))
+            {
+                return Unauthorized();
+            }
+            return Ok(new { Token = await _authenticate.AuthToken() });
         }
     }
 }
