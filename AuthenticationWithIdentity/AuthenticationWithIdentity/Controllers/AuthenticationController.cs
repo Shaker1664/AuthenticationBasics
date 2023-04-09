@@ -41,7 +41,15 @@ namespace AuthenticationWithIdentity.Controllers
             {
                 return Unauthorized();
             }
-            return Ok(new { Token = await _authenticate.AuthToken() });
+            return Ok(new { Token = await _authenticate.AuthToken(populateExp: true) });
+        }
+
+        [HttpPost("refresh")]
+        public async Task<IActionResult> RefreshToken([FromBody]AuthenticationResponse response)
+        {
+            var refreshToken = await _authenticate.RefreshToken(response);
+
+            return Ok(refreshToken);
         }
     }
 }

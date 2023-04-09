@@ -7,6 +7,7 @@ namespace AuthenticationWithIdentity.Interfaces
     {
         Task<IdentityResult> RegisterUser(UserForRegistration user);
         Task<bool> ValidateUser(UserForAuthentication user);
-        Task<string> AuthToken();
+        Task<AuthenticationResponse> AuthToken(bool populateExp);
+        Task<AuthenticationResponse> RefreshToken(AuthenticationResponse token);
     }
 }

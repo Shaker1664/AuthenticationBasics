@@ -2,7 +2,7 @@
 
 namespace AuthenticationWithIdentity.DataTransferObjects
 {
-    public class UserForAuthentication
+    public record UserForAuthentication
     {
         [Required]
         public string? UserName { get; set; }
